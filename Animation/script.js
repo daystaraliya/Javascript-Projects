@@ -10,7 +10,7 @@ function locomotive() {
   ScrollTrigger.scrollerProxy("#main", {
     scrollTop(value) {
       return arguments.length
-        ? locoScroll.scrollTop(value, 0, 0)
+        ? locoScroll.scrollTo(value, 0, 0)
         : locoScroll.scroll.instance.scroll.y;
     },
 
@@ -347,13 +347,12 @@ function files(index) {
      ./male0299.png
      ./male0300.png
  `;
-
   return data.split("\n")[index];
 }
 
 const frameCount = 300;
 
-const image = [];
+const images = [];
 const imageSeq = {
   frame: 1,
 };
@@ -368,7 +367,7 @@ gsap.to(imageSeq, {
   frame: frameCount - 1,
   snap: "frame",
   ease: `none`,
-  ScrollTrigger: {
+  scrollTrigger: {
     scrub: 0.15,
     trigger: `#page>canvas`,
     start: `top top`,
@@ -381,7 +380,7 @@ gsap.to(imageSeq, {
 images[1].onload = render;
 
 function render() {
-  scaleImage(image[imageSeq.frame], context);
+  scaleImage(images[imageSeq.frame], context);
 }
 
 function scaleImage(img, ctx) {
@@ -407,6 +406,7 @@ function scaleImage(img, ctx) {
 ScrollTrigger.create({
   trigger: "#page>canvas",
   pin: true,
+  // markers:true,
   scroller: `#main`,
   start: `top top`,
   end: `600% top`,
@@ -417,29 +417,24 @@ gsap.to("#page1", {
     trigger: `#page1`,
     start: `top top`,
     end: `bottom top`,
-    markers: true,
     pin: true,
     scroller: `#main`,
   },
 });
-
 gsap.to("#page2", {
   scrollTrigger: {
     trigger: `#page2`,
     start: `top top`,
     end: `bottom top`,
-    markers: true,
     pin: true,
     scroller: `#main`,
   },
 });
-
 gsap.to("#page3", {
   scrollTrigger: {
     trigger: `#page3`,
     start: `top top`,
     end: `bottom top`,
-    markers: true,
     pin: true,
     scroller: `#main`,
   },
