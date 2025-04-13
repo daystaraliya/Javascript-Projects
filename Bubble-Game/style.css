@@ -52,8 +52,8 @@ html , body {
 }
 #pbtm{
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content:space-around;
+  align-items:center;
   flex-wrap: wrap;
  
   gap : 5px;
@@ -61,6 +61,12 @@ html , body {
   width: 100%;
   height: calc(100% - 100px);
  
+}
+.score-text{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3px 5px;
 }
 .bubble{
   width: 40px;
