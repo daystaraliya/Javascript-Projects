@@ -7,6 +7,10 @@ let todoList = [
     items: "College",
     dueDate: "22/03/2025",
   },
+  {
+    items: "Coding",
+    dueDate: "15/04/2025",
+  },
 ];
 
 displayItems();
