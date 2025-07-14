@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login Page</title>
+
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      /* background: linear-gradient(120deg, #6a11cb 0%, #2575fc 100%); */
+      background: linear-gradient(#0f0f25 , #094255 ,#0f0f25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      
+    }
+
+    .login-container {
+      /* background: white; */
+      padding: 30px;
+      /* border-radius: 12px; */
+      /* box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.2); */
+      width: 100%;
+      max-width: 370px;
+    }
+
+    .login-container h2 {
+      text-align:center;
+      margin-bottom: -16px;
+      color: #333;
+      height: 100px;
+      color: white;
+      opacity: 0.6;
+      margin-right: 40px;
+
+    }
+
+    label {
+      font-weight: bold;
+      margin-bottom: 6px;
+      display: block;
+      color: white;
+      opacity: 0.6;
+    }
+
+    /* .input{
+      background-color: rgb(0,0,0,0);
+    } */
+    
+    input[type="text"],
+    input[type="password"] {
+      width: 90%;
+      padding: 10px;
+      border: none;
+      border-radius: 16px;
+      outline: none;
+      transition: border 0.3s;
+      margin-bottom: 8px;
+      background-color: rgb(0,0,0,0);
+      border-bottom: 0.5px solid #ccc;
+      color:white;
+      opacity: 0.8;
+      
+    }
+
+    input[type="text"]:focus,
+    input[type="password"]:focus {
+      border-color: #010e25;
+    }
+
+    .error {
+      color: red;
+      font-size: 13px;
+      margin-top: 5px;
+    }
+
+    .forgot-password {
+      text-align: right;
+      margin-top: -10px;
+      margin-bottom: 15px;
+    }
+
+    .forgot-password a {
+      color: #010c0f ;
+      font-size: 14px;
+
+    }
+
+    .forgot-password a:hover {
+      text-decoration: underline;
+    }
+
+    button[type="submit"] {
+      width: 90%;
+      padding: 12px;
+      background-color: #c9d0dd;
+      border: none;
+      color: #094255 ;
+      font-weight: bold;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: background 0.3s;
+      margin-left: 12px;
+      margin-top: 8px;
+      opacity: 0.8;
+      
+
+    }
+
+    button:hover {
+      opacity: 1;
+      
+    }
+
+    .divider {
+      text-align: center;
+      margin:26px 0;
+      font-size: 14px;
+      color: #888;
+      position: relative;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 32%;
+      height: 1px;
+      background: #ccc;
+    }
+
+    .divider::before {
+      left: 0;
+    }
+
+    .divider::after {
+      right: 0;
+    }
+
+    .social-btns {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      /* gap: 10px; */
+    }
+
+    .social-btns button {
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-radius: 50%;
+  color: white;
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: opacity 0.3s;
+    }
+
+    .google {
+      background-color: #d84c3f;
+      /* margin-right: 2px; */
+      margin-left: 34px;
+   
+    }
+
+    .twitter {
+      background-color: #1da1f2;
+
+    }
+
+    .facebook {
+      background-color: #3b5998;
+      margin-right: 34px;
+    }
+
+    .social-btns button:hover {
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-container">
+    <h2 class="Heading">Login</h2>
+    <form action="/server" id="loginForm">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="text" id="email" class="'input"/>
+        <div class="error" id="emailError"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" class="input"/>
+        <div class="error" id="passwordError"></div>
+      </div>
+
+      <div class="forgot-password">
+        <a href="#" id="forgotLink">Forgot Password?</a>
+      </div>
+
+      <button type="submit">Login to your account</button>
+    </form>
+
+    <div class="divider">or sign up using</div>
+
+    <div class="social-btns">
+      <button class="google" id="googleLogin"><i class="fab fa-google"></i></button>
+      <button class="twitter" id="twitterLogin"><i class="fab fa-twitter"></i></button>
+      <button class="facebook" id="facebookLogin"><i class="fab fa-facebook-f"></i></button>
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(function () {
+     
+      $('#loginForm').submit(function (e) {
+        e.preventDefault();
+
+
+
+        $('.error').text('');
+        let email = $('#email').val().trim();
+        let password = $('#password').val().trim();
+        let isValid = true;
+
+        let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+        if (email === '') {
+          $('#emailError').text('Email is required');
+          isValid = false;
+        } else if (!emailPattern.test(email)) {
+          $('#emailError').text('Enter a valid email');
+          isValid = false;
+        }
+
+        if (password === '') {
+          $('#passwordError').text('Password is required');
+          isValid = false;
+        } else if (password.length < 6) {
+          $('#passwordError').text('Password must be at least 6 characters');
+          isValid = false;
+        }
+
+        if (isValid) {
+          alert('Login successful!');
+        }
+      });
+
+      $('#forgotLink').click(function (e) {
+        e.preventDefault();
+        alert('Password reset instructions will be sent to your email.');
+      });
+
+      $('#googleLogin').click(function () {
+        alert('Through Google');
+      });
+
+      $('#twitterLogin').click(function () {
+        alert('Through Twitter');
+      });
+
+      $('#facebookLogin').click(function () {
+        alert('Through Facebook');
+      });
+    });
+  </script>
+
+</body>
+</html>
